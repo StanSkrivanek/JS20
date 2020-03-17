@@ -47,11 +47,23 @@ function formatMoney(number) {
   return "$ " + number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
 }
 
-// double everyones money
+// double everyones money - by MAP
 function doubleMoney() {
   dataArr = dataArr.map(user => {
     return { ...user, money: user.money * 2 };
   });
+  updateDOM();
+}
+
+// Sort by Richest by SORT
+function sortByRichest() {
+  dataArr.sort((a, b) => b.money - a.money);
+  updateDOM();
+}
+
+// show only milioniares - by FILTER
+function showMillionares() {
+  dataArr = dataArr.filter(user => user.money > 1000000);
 
   updateDOM();
 }
@@ -59,3 +71,5 @@ function doubleMoney() {
 // event listeners
 addUserBtn.addEventListener("click", getRandomUser);
 doubleBtn.addEventListener("click", doubleMoney);
+sortBtn.addEventListener("click", sortByRichest);
+showMillionBtn.addEventListener("click", showMillionares);
