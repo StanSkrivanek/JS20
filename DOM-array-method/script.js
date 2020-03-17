@@ -28,7 +28,7 @@ function addData(obj) {
   updateDOM();
 }
 
-// Update DOM
+// Update DOM - by FOREACH
 function updateDOM(provideData = dataArr) {
   // clear main div
   main.innerHTML = "<h2><strong>Person</strong>Wealth</h2>";
@@ -67,8 +67,22 @@ function showMillionares() {
   updateDOM();
 }
 
+// sum all money - by REDUCE
+function calculateAllWealth() {
+  const wealth = dataArr.reduce((acc, user) => (acc += user.money), 0);
+
+  console.log(wealth);
+
+  const wealthEl = document.createElement("div");
+  wealthEl.innerHTML = `<h3>Total Wealth: <strong>${formatMoney(
+    wealth
+  )}</strong></h3>`;
+
+  main.appendChild(wealthEl);
+}
 // event listeners
 addUserBtn.addEventListener("click", getRandomUser);
 doubleBtn.addEventListener("click", doubleMoney);
 sortBtn.addEventListener("click", sortByRichest);
 showMillionBtn.addEventListener("click", showMillionares);
+calcWealthBtn.addEventListener("click", calculateAllWealth);
