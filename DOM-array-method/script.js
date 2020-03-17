@@ -64,7 +64,6 @@ function sortByRichest() {
 // show only milioniares - by FILTER
 function showMillionares() {
   dataArr = dataArr.filter(user => user.money > 1000000);
-
   updateDOM();
 }
 
