@@ -7,28 +7,24 @@ const calcWealthBtn = document.getElementById("calculate-wealth");
 
 // initialize array of objects` {name: string, money: num}
 let dataArr = [];
+
 getRandomUser();
 // fetch random user and add money
 async function getRandomUser() {
   const res = await fetch("https://uinames.com/api/");
-  // const res = await fetch("https://uinames.com/api/?amount=7");
   const data = await res.json();
-  // console.log(data);
   const user = data;
-  // const user = data[0];
 
   const newUser = {
     fullName: `${user.name} ${user.surname}`,
     money: Math.floor(Math.random() * 1000000)
   };
   addData(newUser);
-  console.log(newUser);
 }
 
 // Ass new obj to data array
 function addData(obj) {
   dataArr.push(obj);
-
   updateDOM();
 }
 
@@ -51,5 +47,15 @@ function formatMoney(number) {
   return "$ " + number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
 }
 
+// double everyones money
+function doubleMoney() {
+  dataArr = dataArr.map(user => {
+    return { ...user, money: user.money * 2 };
+  });
+
+  updateDOM();
+}
+
 // event listeners
 addUserBtn.addEventListener("click", getRandomUser);
+doubleBtn.addEventListener("click", doubleMoney);
