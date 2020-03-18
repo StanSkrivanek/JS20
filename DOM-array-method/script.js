@@ -74,7 +74,7 @@ function calculateAllWealth() {
   console.log(wealth);
 
   const wealthEl = document.createElement("div");
-  wealthEl.innerHTML = `<h3>Total Wealth: <strong>${formatMoney(
+  wealthEl.innerHTML = `<h3 class="total">Total Wealth: <strong class="totalCount">${formatMoney(
     wealth
   )}</strong></h3>`;
 
