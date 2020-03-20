@@ -9,7 +9,7 @@ const apiURL = "https://api.lyrics.ovh";
 async function searchSongs(term) {
   const res = await fetch(`${apiURL}/suggest/${term}`);
   const data = await res.json();
-
+  console.log(data);
   showData(data);
 }
 
@@ -21,7 +21,7 @@ function showData(data) {
     //  key `data` is part of response (arrray)
     .map(
       song => `<li>
-  <span><strong>${song.artist.name}</strong> - ${song.title}</span> 
+  <img src=${song.album.cover_small}><span><strong>${song.artist.name}</strong> - ${song.title}</span> 
   <button class="btn" data-artist="${song.artist.name}" data-songtitle="${song.title}">Get Lyrics</button>
   </li>`
     )
@@ -62,10 +62,10 @@ async function getMoreSongs(url) {
 async function getLyrics(artist, songTitle) {
   const res = await fetch(`${apiURL}/v1/${artist}/${songTitle}}`);
   const data = await res.json();
-  // console.log(data);
+  console.log(data);
 
   // use REGEX (/ /) - check for return `r` and new line `n` or just `r` or just `n` and check whole data (don't stop after first match) with global flag `g`. when Match if found, replace it with line break `<br>`
-  const lyrics = data.lyrics.replace(/(\r\n|\r|\n)/g, "<br>");
+  const lyrics = data.lyrics.replace(/(\r\n|\n\n)/g, "<br>");
 
   // place it into page
 
