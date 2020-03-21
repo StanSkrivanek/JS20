@@ -5,30 +5,34 @@ const more = document.getElementById("more");
 
 const apiURL = "https://api.lyrics.ovh";
 
-// Search by song or artist
+// Search by song or artist - event listener is on `form` element
 async function searchSongs(term) {
   const res = await fetch(`${apiURL}/suggest/${term}`);
-  const data = await res.json();
-  // console.log(data);
-  showData(data);
+  const basedOnInput = await res.json();
+  // console.log(basedOnInput);
+
+  showData(basedOnInput); // execute search from input
 }
 
 // show song and artist in DOM
-function showData(data) {
+function showData(basedOnInput) {
   result.innerHTML = `
   <ul class="songs">
-  ${data.data
-    //  key `data` is part of response (arrray)
+
+  ${basedOnInput.data
+    //  key `data` is part of response (root arrray)
+    // Object: (data: Array, total: num, next: url)
+
     .map(
       song => `<li>
-  <img class="list-cover" src=${song.album.cover_small}>
+      <img class="list-cover" src=${song.album.cover_small}>
+
     <div class="search-data">
       <h3>${song.artist.name}</h3>
       <small>${song.title}</small> 
       <div>
-      <button class="btn lyrics-get" data-artist="${song.artist.name}" data-songtitle="${song.title}">Get Lyrics</button>
+      <button class="btn lyrics-get" album="${song.album.title}"  cover="${song.album.cover}" audioPrev="${song.preview}" data-artist="${song.artist.name}" data-songtitle="${song.title}">Get Lyrics</button>
       </div>
-
     </div>
   </li>`
     )
@@ -36,16 +40,16 @@ function showData(data) {
   </ul>
   `;
 
-  if (data.prev || data.next) {
+  if (basedOnInput.prev || basedOnInput.next) {
     more.innerHTML = `
       ${
-        data.prev
-          ? `<button class="btn" onclick="getMoreSongs('${data.prev}')">Prev</button>`
+        basedOnInput.prev
+          ? `<button class="btn" onclick="getMoreSongs('${basedOnInput.prev}')">Prev</button>`
           : ""
       }
       ${
-        data.next
-          ? `<button class="btn" onclick="getMoreSongs('${data.next}')">Next</button>`
+        basedOnInput.next
+          ? `<button class="btn" onclick="getMoreSongs('${basedOnInput.next}')">Next</button>`
           : ""
       }
       `;
@@ -66,29 +70,48 @@ async function getMoreSongs(url) {
 }
 
 // GET lyrics for song
-async function getLyrics(artist, songTitle, clickedEl) {
+async function getLyrics(
+  artist,
+  songTitle,
+  clickedEl,
+  cover,
+  album,
+  audioPrev
+) {
   const res = await fetch(`${apiURL}/v1/${artist}/${songTitle}}`);
-  console.log(res);
+  // console.log(res);
   if (res.status === 404) {
-    clickedEl.className = "btn red";
+    clickedEl.className = "btn not-found";
     clickedEl.innerText = "No Lyrics yet";
   } else {
     const data = await res.json();
-    console.log(res);
 
     // use REGEX (/ /) - check for return `r` and new line `n` or just `r` or just `n` and check whole data (don't stop after first match) with global flag `g`. when Match if found, replace it with line break `<br>`
     const lyrics = data.lyrics.replace(/(\r\n|\n\n)/g, "<br>");
 
     // place it into page
-    result.innerHTML = `<h2><strong>${artist}</strong> - ${songTitle}</h2><span>${lyrics}</span>`;
+    result.innerHTML = `
+    <div class="lyric-header">
+      <img src="${cover}" class="list-cover">
+      <div class="lyric-header__data">
+        <small>Artist:</small>
+        <h2>${artist}</h2>
+        <small>Album:</small>
+        <h3>${album}</h3>
+      </div>
+      <div>
+      </div>
+    </div>
+    <div class="lyrics-container">
+      <h2>${songTitle}</h2>
+      <audio src="${audioPrev}" controls ></audio>
+      <div class="lyrics">${lyrics}</div>
+    </div>
+    `;
 
     // clear `more` section
     more.innerHTML = "";
   }
-}
-function lyricsNotFound() {
-  const el = "bla";
-  console.log(el);
 }
 
 // ======================================================== EVENT LISTENERS
@@ -119,10 +142,16 @@ result.addEventListener("click", e => {
   // console.log(e.target); // button.btn
   const clickedEl = e.target;
 
-  // (clickedEl.tagName === "BUTTON")
-  // console.log("BUTTON");
+  // optionally:  (clickedEl.tagName === "BUTTON")
+
   const artist = clickedEl.getAttribute("data-artist");
   const songTitle = clickedEl.getAttribute("data-songtitle");
+  const cover = clickedEl.getAttribute("cover");
+  const album = clickedEl.getAttribute("album");
+  const audioPrev = clickedEl.getAttribute("audioPrev");
 
-  getLyrics(artist, songTitle, clickedEl);
+  // console.log(album);
+  if (clickedEl.tagName === "BUTTON") {
+    getLyrics(artist, songTitle, clickedEl, cover, album, audioPrev);
+  }
 });
