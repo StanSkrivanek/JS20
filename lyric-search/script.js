@@ -9,7 +9,7 @@ const apiURL = "https://api.lyrics.ovh";
 async function searchSongs(term) {
   const res = await fetch(`${apiURL}/suggest/${term}`);
   const data = await res.json();
-  console.log(data);
+  // console.log(data);
   showData(data);
 }
 
@@ -21,8 +21,15 @@ function showData(data) {
     //  key `data` is part of response (arrray)
     .map(
       song => `<li>
-  <img src=${song.album.cover_small}><span><strong>${song.artist.name}</strong> - ${song.title}</span> 
-  <button class="btn" data-artist="${song.artist.name}" data-songtitle="${song.title}">Get Lyrics</button>
+  <img class="list-cover" src=${song.album.cover_small}>
+    <div class="search-data">
+      <h3>${song.artist.name}</h3>
+      <small>${song.title}</small> 
+      <div>
+      <button class="btn lyrics-get" data-artist="${song.artist.name}" data-songtitle="${song.title}">Get Lyrics</button>
+      </div>
+
+    </div>
   </li>`
     )
     .join("")}
@@ -59,19 +66,29 @@ async function getMoreSongs(url) {
 }
 
 // GET lyrics for song
-async function getLyrics(artist, songTitle) {
+async function getLyrics(artist, songTitle, clickedEl) {
   const res = await fetch(`${apiURL}/v1/${artist}/${songTitle}}`);
-  const data = await res.json();
-  console.log(data);
+  console.log(res);
+  if (res.status === 404) {
+    clickedEl.className = "btn red";
+    clickedEl.innerText = "No Lyrics yet";
+  } else {
+    const data = await res.json();
+    console.log(res);
 
-  // use REGEX (/ /) - check for return `r` and new line `n` or just `r` or just `n` and check whole data (don't stop after first match) with global flag `g`. when Match if found, replace it with line break `<br>`
-  const lyrics = data.lyrics.replace(/(\r\n|\n\n)/g, "<br>");
+    // use REGEX (/ /) - check for return `r` and new line `n` or just `r` or just `n` and check whole data (don't stop after first match) with global flag `g`. when Match if found, replace it with line break `<br>`
+    const lyrics = data.lyrics.replace(/(\r\n|\n\n)/g, "<br>");
 
-  // place it into page
+    // place it into page
+    result.innerHTML = `<h2><strong>${artist}</strong> - ${songTitle}</h2><span>${lyrics}</span>`;
 
-  result.innerHTML = `<h2><strong>${artist}</strong> - ${songTitle}</h2><span>${lyrics}</span>`;
-  // clear `more` section
-  more.innerHTML = "";
+    // clear `more` section
+    more.innerHTML = "";
+  }
+}
+function lyricsNotFound() {
+  const el = "bla";
+  console.log(el);
 }
 
 // ======================================================== EVENT LISTENERS
@@ -83,14 +100,15 @@ form.addEventListener("submit", e => {
   const searchTerm = search.value.trim();
   if (!searchTerm) {
     // if search field is empty show error (alert)
-    alert("Please type in a search field some term");
+    return alert("Please type in a search field some term");
+    // result.innerHTML += `<small>Please type in a search field some term</small>`;
   } else {
     searchSongs(searchTerm);
   }
 });
 
 // --- Search lyrics
-// Because button for getting lyrics is genereted by javaScript we have to add event listener on its parent element (`div` with ID `result)
+// Because button for getting lyrics is genereted by javaScript we have to add event listener on its parent element (`div` with ID `result)ant than point to element we want target by `tagName`
 
 // if contition its up to you it can be `id`, `class` etc.
 // using `tagName` - For DOM trees which represent HTML documents, the returned tag name is always in the canonical upper-case form. For example, tagName called on a <div> element returns "DIV".
@@ -101,11 +119,10 @@ result.addEventListener("click", e => {
   // console.log(e.target); // button.btn
   const clickedEl = e.target;
 
-  if (clickedEl.tagName === "BUTTON") {
-    // console.log("BUTTON");
-    const artist = clickedEl.getAttribute("data-artist");
-    const songTitle = clickedEl.getAttribute("data-songtitle");
+  // (clickedEl.tagName === "BUTTON")
+  // console.log("BUTTON");
+  const artist = clickedEl.getAttribute("data-artist");
+  const songTitle = clickedEl.getAttribute("data-songtitle");
 
-    getLyrics(artist, songTitle);
-  }
+  getLyrics(artist, songTitle, clickedEl);
 });
