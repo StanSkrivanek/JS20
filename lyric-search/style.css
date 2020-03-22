@@ -86,6 +86,11 @@ form button {
   padding: 4px 10px;
 }
 
+/* .lyrics-result {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+} */
+
 .not-found {
   background-color: crimson;
 }
