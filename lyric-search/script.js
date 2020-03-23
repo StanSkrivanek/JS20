@@ -65,7 +65,7 @@ function showData(basedOnInput) {
 async function getMoreSongs(url) {
   const res = await fetch(`https://cors-anywhere.herokuapp.com/${url}`);
   const data = await res.json();
-
+  // console.log(data);
   showData(data);
 }
 
@@ -85,10 +85,11 @@ async function getLyrics(
     clickedEl.innerText = "No Lyrics yet";
   } else {
     const data = await res.json();
+    // console.log(data);
 
     // use REGEX (/ /) - check for return `r` and new line `n` or just `r` or just `n` and check whole data (don't stop after first match) with global flag `g`. when Match if found, replace it with line break `<br>`
     const lyrics = data.lyrics.replace(/(\r\n|\n\n)/g, "<br>");
-
+    // const lyrics = data.lyrics;
     // place it into page
     result.innerHTML = `
     <div class="lyric-header">
@@ -121,6 +122,7 @@ form.addEventListener("submit", e => {
   e.preventDefault();
   // trim -> trim white space
   const searchTerm = search.value.trim();
+  // console.log(object);
   if (!searchTerm) {
     // if search field is empty show error (alert)
     return alert("Please type in a search field some term");
@@ -141,6 +143,7 @@ form.addEventListener("submit", e => {
 result.addEventListener("click", e => {
   // console.log(e.target); // button.btn
   const clickedEl = e.target;
+  // console.log(e.target);
 
   // optionally:  (clickedEl.tagName === "BUTTON")
 
