@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- prevent favicon call-->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Cocktails</title>
+  </head>
+  <body>
+    <header class="header-container">
+      <div class="logo">
+        <h1>Cocktails DB</h1>
+      </div>
+      <!-- <form id="form">
+        <input type="text" id="search" placeholder="Enter drink" />
+        <button>Search</button>
+      </form> -->
+      <button id="btn_random" class="btn_random" onclick="jsonFromAPI()">
+        random cocktail
+      </button>
+      <div id="az-wrapper" class="azWrapper"></div>
+    </header>
+    <main id="result"></main>
+    <!-- MODAL -->
+    <div id="modal-container" class="modal-container ">
+      <div id="modal" class="modal"></div>
+    </div>
+    <footer id="footer" class="footer main-result">
+      <p>
+        Limited version of <span><a href="">cocktailsDB</a></span>
+      </p>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

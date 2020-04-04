@@ -1,0 +1,258 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  position: relative;
+  font-family: Verdana, sans-serif;
+  font-size: 18px;
+  max-width: 75rem;
+  margin: 0 auto;
+}
+
+.header-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+  border-bottom: 2px solid #eee;
+}
+
+.btn_random {
+  padding: 8px 16px;
+  margin: 16px;
+  border: none;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: black;
+  letter-spacing: 2px;
+  background-color: aquamarine;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+form {
+  position: relative;
+  width: 500px;
+  max-width: 100%;
+}
+
+form input {
+  border: 1px solid #eee;
+  border-radius: 50px;
+  font-size: 16px;
+  padding: 15px 30px;
+  width: 100%;
+}
+
+form button {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background-color: #e056fd;
+  border: 0;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 16px;
+  padding: 13px 30px;
+  cursor: pointer;
+}
+
+main {
+  min-height: 75vh;
+  padding: 1rem;
+}
+
+.main-result {
+  text-align: center;
+}
+.main-result span a {
+  color: rgb(19, 19, 19);
+  text-decoration: none;
+}
+/* === RANDOM === */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 400px;
+  border: 1px solid #fee;
+  border-radius: 3px;
+  padding: 8px;
+  box-shadow: 3px 5px 16px #eee;
+  background-color: #fff;
+}
+.header {
+  color: crimson;
+  padding: 0 0 16px;
+  margin: 16px 0;
+  text-align: center;
+}
+.image {
+  width: 100%;
+}
+
+.global_info {
+  margin-bottom: 16px;
+}
+
+.global_info small span {
+  color: rgb(152, 152, 152);
+}
+
+.basicInfo {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  font-size: 14px;
+}
+.image,
+.basicInfo,
+.instruction,
+.wrapper {
+  margin-bottom: 16px;
+}
+
+.instruction {
+  color: rgb(120, 120, 120);
+}
+.instruction h3 {
+  color: rgb(84, 84, 84);
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.ingred {
+  color: crimson;
+}
+.measure {
+  font-weight: 600;
+}
+
+/* === LETTER ===*/
+
+.error {
+  color: #fff;
+  text-align: center;
+  padding: 1rem 2rem;
+  background-color: crimson;
+}
+.thumbs_wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.thumbnail {
+  text-align: center;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 5px;
+  box-shadow: 5px 5px 8px rgba(84, 84, 84, 0.2);
+  list-style: none;
+}
+
+.thumbnail:hover {
+  box-shadow: 5px 5px 8px rgba(85, 46, 4, 0.4);
+}
+.thumbnail:hover p {
+  color: rgb(101, 50, 10);
+  text-shadow: 3px 3px 7px rgb(84, 84, 84);
+}
+.thumbnail img {
+  max-width: 100%;
+  margin-bottom: 0.5rem;
+}
+.thumbnail p {
+  text-align: center;
+  color: rgb(177, 177, 177);
+}
+
+.btn-toggle {
+  background-color: rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  text-align: center;
+  background-color: aquamarine;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 8px 12px;
+  margin-bottom: 0.2rem;
+}
+.azWrapper ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.azWrapper ul li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  margin: 4px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  list-style: none;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 1px solid #eee;
+  background-color: #eee;
+}
+
+.azWrapper ul li:hover {
+  background-color: crimson;
+  color: floralwhite;
+}
+/* === MODAL === */
+.modal-container {
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.modal {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  width: 400px;
+  animation-name: modalopen;
+  animation-duration: 0.5s;
+}
+
+.modal-container.show-modal {
+  display: block;
+}
+
+/* === FOOTER === */
+.footer {
+  background-color: chocolate;
+  height: 100px;
+  padding: 1rem;
+  color: #fff;
+  text-align: center;
+}
+/* === ANIMATIONS === */
+@keyframes modalopen {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

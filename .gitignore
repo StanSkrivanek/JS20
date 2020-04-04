@@ -1,5 +1,4 @@
 # Ignore Mac system files
 .DS_store
 .git
-spare.js
-/progress
+./spare.js
