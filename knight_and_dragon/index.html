@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- prevent favicon call-->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <div id="scene" class="scene">
+        <div id="princess" class="princess character-container">
+          <img src="/assets/img/princess.jpg" alt="princess" />
+        </div>
+        <!-- KNIGHT -->
+        <div id="knight" class="knight character-container">
+          <img
+            id="knightImage"
+            src="/assets/img/knight-ready.jpg"
+            alt="knight"
+          />
+          <div id="progBar-wrap" class="progBar-wrap">
+            <div id="swordProgressBar" class="progressBar attackProgBar"></div>
+            <div id="knightsLife" class="progressBar lifeProgBar"></div>
+          </div>
+          <div class="hit"></div>
+        </div>
+        <!-- DRAGON -->
+        <div id="dragon" class="dragon character-container">
+          <img
+            id="dragonImage"
+            src="/assets/img/dragon-scared.jpg"
+            alt="dragon"
+          />
+          <div id="progBar-wrap" class="progBar-wrap">
+            <div id="fireProgressBar" class="progressBar attackProgBar"></div>
+            <div id="dragonsLife" class="progressBar lifeProgBar"></div>
+          </div>
+          <div class="hit"></div>
+        </div>
+      </div>
+      <div class="actions" id="action">
+        <button type="submit" id="btnPlay" class="btn-play" attacker="knight">
+          Knight's move
+        </button>
+        <!-- SCORE -->
+        <div id="score" class="score">
+          <div class="itemScoreWrap">
+            <h3>Knight</h3>
+            <p class="totalLife knightLife">100</p>
+          </div>
+          <div class="itemScoreWrap">
+            <h3>Dragon</h3>
+            <p class="totalLife dragonLife">100</p>
+          </div>
+        </div>
+      </div>
+      <div id="modalWindow" class="modal-window">
+        <div id="modalContainer" class="modal-container"></div>
+      </div>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

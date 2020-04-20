@@ -113,6 +113,4 @@ function pauseSlides() {
 }
 mainContainer.addEventListener("mouseover", pauseSlides);
 mainContainer.addEventListener("mouseout", playAgain);
-// document.addEventListener("mouseover", pauseSlides);
-// document.addEventListener("mouseout", playAgain);
 // document.addEventListener("keydown", keysNav);
